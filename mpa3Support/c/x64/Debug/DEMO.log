@@ -1,0 +1,16 @@
+﻿demo.obj : error LNK2019: unresolved external symbol __imp___acrt_iob_func referenced in function printf
+demo.obj : error LNK2019: unresolved external symbol __imp___stdio_common_vfprintf referenced in function _vfprintf_l
+demo.obj : error LNK2019: unresolved external symbol __imp___stdio_common_vfscanf referenced in function _vfscanf_l
+demo.obj : error LNK2019: unresolved external symbol __imp___stdio_common_vsscanf referenced in function _vsscanf_l
+demo.obj : error LNK2019: unresolved external symbol __imp_stricmp referenced in function run
+demo.obj : error LNK2019: unresolved external symbol __imp_strnicmp referenced in function run
+demo.obj : error LNK2019: unresolved external symbol _RTC_CheckStackVars referenced in function main
+demo.obj : error LNK2001: unresolved external symbol _RTC_InitBase
+demo.obj : error LNK2001: unresolved external symbol _RTC_Shutdown
+demo.obj : error LNK2001: unresolved external symbol __GSHandlerCheck
+demo.obj : error LNK2019: unresolved external symbol __security_check_cookie referenced in function main
+demo.obj : error LNK2019: unresolved external symbol __security_cookie referenced in function main
+demo.obj : error LNK2001: unresolved external symbol _fltused
+LINK : error LNK2001: unresolved external symbol mainCRTStartup
+C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\MSVCRTD.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+D:\epics\areaDetector-R2-4\ADMPA3\mpa3Support\c\x64\Debug\DEMO.exe : fatal error LNK1120: 14 unresolved externals

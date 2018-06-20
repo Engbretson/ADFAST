@@ -1,0 +1,83 @@
+;*Dmpa3.def
+;*Version:              NT/95 1.0
+;*Date:                 Aug-15-1998
+;*Hardware:             MPA3
+;*Op System:	Windows NT 3.51/4.0, Windows 95 					 
+;*Compiler:		MSVC++ 4.2											 
+;*
+
+LIBRARY DMPA3
+
+SECTIONS
+        dmpa3sh		READ WRITE SHARED
+
+EXPORTS
+;       Functions in dmpa3.c
+        StoreSettingData        @2
+        GetSettingData          @3
+        StoreStatusData         @4
+        GetStatusData           @5
+        Start                   @6
+        Halt                    @7
+        Continue                @8
+        NewSetting              @9
+        ServExec                @10
+        StoreData               @11
+        GetData                 @12
+        GetSpec                 @13
+        SaveSetting             @14
+        GetStatus               @15
+        Erase                   @16
+        SaveData                @17
+        GetBlock                @18
+        StoreDefData            @19
+        GetDefData              @20
+        LoadData                @21
+        NewData                 @22
+        HardwareDlg             @23
+        UnregisterClient        @24
+        DestroyClient           @25
+        ClientExec              @26
+        LVGetDat                @27
+        RunCmd                  @28
+        AddData                 @29
+        LVGetRoi                @30
+        LVGetCnt                @31
+		LVGetOneCnt				@32
+        LVGetStr                @33
+        SubData                 @34
+        Smooth                  @35
+        StoreExtSettingData     @36
+        GetExtSettingData       @37
+        StoreMP3Setting         @38
+        GetMP3Setting           @39
+        StoreDatSetting         @40
+        GetDatSetting           @41
+        StoreReplaySetting      @42
+        GetReplaySetting        @43
+		GetDatPtr				@44
+		ReleaseDatPtr			@45
+		LVGetOneRoi				@46
+		GetSVal                 @47
+		DigInOut				@48
+		DacOut					@49
+		GetRoiIndex				@50
+		DeleteRoi				@51
+		GetRoiSum				@52
+		SelectRoi				@53
+		BytearrayToShortarray	@54
+		LVGetRoinam				@55
+		LVGetSpecLength			@56
+		LVGetDefData		    @57
+		LVGetDatSetting			@58
+		LVGetReplaySetting		@59
+		LVGetProiDat			@60
+		LVGetRoiRect			@61
+		LVGetRroiDat			@62
+;       Functions in custom.c
+		CloseTab		
+		IniTab
+		RTab	
+		IniSweep
+		IncSweep
+

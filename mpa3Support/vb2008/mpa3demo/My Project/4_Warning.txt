@@ -1,0 +1,8 @@
+
+BLOCKED FILE ALERT
+
+A file has been blocked due to the 'Blocked for exchange' rule.
+Context: 'Application.Designer.vb'
+Disallowed due to 
+Ticket Number: '0bf4-5667-d9ef-0001'
+See your system administrator for further information. Copyright 1999-2013 McAfee, Inc.All Rights Reserved.http://www.mcafee.com
