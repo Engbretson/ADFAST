@@ -17,3 +17,5 @@ O.*/
 .settings
 .cproject
 external/
+../*
+

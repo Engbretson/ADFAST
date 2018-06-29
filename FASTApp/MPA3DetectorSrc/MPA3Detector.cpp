@@ -15,6 +15,7 @@
 #include <epicsTime.h>
 #include <epicsThread.h>
 #include <epicsEvent.h>
+#include <epicsString.h>
 #include <iocsh.h>
 
 #include "asynNDArrayDriver.h"
@@ -51,13 +52,19 @@ static void mpaTaskC(void *drvPvt)
 MPA3Detector::MPA3Detector(const char *portName, int numTimePoints, NDDataType_t dataType,
                                int maxBuffers, size_t maxMemory, int priority, int stackSize)
 
-    : asynNDArrayDriver(portName, MAX_SIGNALS, NUM_MPA_DETECTOR_PARAMS, maxBuffers, maxMemory,
+//    : asynNDArrayDriver(portName, MAX_SIGNALS, NUM_MPA_DETECTOR_PARAMS, maxBuffers, maxMemory,
+//               0, 0, /* No interfaces beyond those set in ADDriver.cpp */
+//               ASYN_CANBLOCK | ASYN_MULTIDEVICE, /* asyn flags*/
+//               1,                                /* autoConnect=1 */
+//               priority, stackSize),
+//    uniqueId_(0), acquiring_(0)
+
+    : asynNDArrayDriver(portName, MAX_SIGNALS, maxBuffers, maxMemory,
                0, 0, /* No interfaces beyond those set in ADDriver.cpp */
                ASYN_CANBLOCK | ASYN_MULTIDEVICE, /* asyn flags*/
                1,                                /* autoConnect=1 */
                priority, stackSize),
-    uniqueId_(0), acquiring_(0)
-
+    uniqueId_(0), acquiring_(0)			   
 {
     int status = asynSuccess;
     int ErrSet;

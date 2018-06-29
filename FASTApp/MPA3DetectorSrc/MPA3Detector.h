@@ -38,7 +38,8 @@ public:
     MPA3Detector(const char *portName, int numTimePoints, NDDataType_t dataType,
                    int maxBuffers, size_t maxMemory,
                    int priority, int stackSize);
-    virtual ~MPA3Detector();
+ 
+ virtual ~MPA3Detector();
 
     /* These are the methods that we override from asynNDArrayDriver */
     virtual asynStatus writeInt32(asynUser *pasynUser, epicsInt32 value);
