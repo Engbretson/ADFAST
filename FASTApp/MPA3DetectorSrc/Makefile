@@ -20,6 +20,16 @@ LIB_SRCS += MPA3Detector.cpp
 
 DBD += MPA3DetectorSupport.dbd
 
+  # Optional modules
+    
+ ifdef MODBUS
+	$(DBD_NAME)_DBD  += drvAsynIPPort.dbd
+	$(DBD_NAME)_DBD  += drvAsynSerialPort.dbd
+    $(DBD_NAME)_DBD  += modbusSupport.dbd
+    PROD_LIBS        += modbus
+  endif
+
+
 include $(ADCORE)/ADApp/commonLibraryMakefile
 
 #=============================

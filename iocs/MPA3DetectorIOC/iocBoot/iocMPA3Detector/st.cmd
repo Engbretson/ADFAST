@@ -1,6 +1,11 @@
 < envPaths
 errlogInit(20000)
 
+epicsEnvSet("IOC","ioc29iddMPA")
+epicsEnvSet("engineer","Engbretson")
+epicsEnvSet("location","ID-29-D")
+epicsEnvSet("group","ID-29-D")
+
 dbLoadDatabase("$(TOP)/dbd/MPA3DetectorApp.dbd")
 MPA3DetectorApp_registerRecordDeviceDriver(pdbbase) 
 
@@ -21,6 +26,7 @@ epicsEnvSet("TSPOINTS", "2048")
 # The maximum number of frames buffered in the NDPluginCircularBuff plugin
 epicsEnvSet("CBUFFS", "500")
 # The search path for database files
+
 epicsEnvSet("EPICS_DB_INCLUDE_PATH", "$(ADCORE)/db")
 
 epicsEnvSet("T1", "Sin(x)")
@@ -52,6 +58,7 @@ asynSetMinTimerPeriod(0.001)
 MPA3DetectorConfig("$(PORT)", $(YSIZE), 7, 0, 0)
 dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det1:,  PORT=$(PORT),ADDR=0,TIMEOUT=1")
 
+
 # Create a standard arrays plugin, set it to get data from ADCSDetector driver.
 NDStdArraysConfigure("Image1", 3, 0, "$(PORT)", 0)
 # This creates a waveform large enough for 100000x8 arrays.
@@ -63,6 +70,8 @@ set_requestfile_path("$(ADFAST)/FASTApp/Db")
 
 #asynSetTraceIOMask("$(PORT)",0,2)
 #asynSetTraceMask("$(PORT)",0,255)
+
+< modbus.cmd
 
 iocInit()
 

@@ -1,0 +1,144 @@
+
+# These are the Xn inputs done with bit access 
+
+file "$(MODBUS)\db\bi_bit.template" { pattern
+{P,           R,       PORT,          OFFSET,   ZNAM,   ONAM,  ZSV,       OSV,    SCAN, DESC}
+{29iddMPA:,    X0,     X_Bits,     0,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X0"}
+{29iddMPA:,    X1,     X_Bits,     1,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X1"}
+{29iddMPA:,    X2,     X_Bits,     2,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X2"}
+{29iddMPA:,    X3,     X_Bits,     3,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X3"}
+{29iddMPA:,    X4,     X_Bits,     4,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X4"}
+{29iddMPA:,    X5,     X_Bits,     5,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X5"}
+{29iddMPA:,    X6,     X_Bits,     6,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X6"}
+{29iddMPA:,    X7,     X_Bits,     7,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X7"}
+{29iddMPA:,    X10,    X_Bits,     010,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X10"}
+{29iddMPA:,    X11,    X_Bits,     011,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X11"}
+{29iddMPA:,    X12,    X_Bits,     012,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X12"}
+{29iddMPA:,    X13,    X_Bits,     013,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X13"}
+{29iddMPA:,    X14,    X_Bits,     014,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X14"}
+{29iddMPA:,    X15,    X_Bits,     015,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X15"}
+{29iddMPA:,    X16,    X_Bits,     016,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X16"}
+{29iddMPA:,    X17,    X_Bits,     017,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X17"}
+{29iddMPA:,    X20,    X_Bits,     020,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X20"}
+{29iddMPA:,    X21,    X_Bits,     021,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X21"}
+{29iddMPA:,    X22,    X_Bits,     022,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X22"}
+{29iddMPA:,    X23,    X_Bits,     023,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "X23"}  
+}
+
+# These are the Yn inputs done with bit access 
+
+file "$(MODBUS)\db\bi_bit.template" { pattern
+{P,           R,         PORT,             OFFSET,   ZNAM,   ONAM,  ZSV,       OSV,    SCAN, DESC}
+{29iddMPA:,    Y0,     Y_Bits,     0,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y0"}
+{29iddMPA:,    Y1,     Y_Bits,     1,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y1"}
+{29iddMPA:,    Y2,     Y_Bits,     2,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y2"}
+{29iddMPA:,    Y3,     Y_Bits,     3,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y3"}
+{29iddMPA:,    Y4,     Y_Bits,     4,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y4"}
+{29iddMPA:,    Y5,     Y_Bits,     5,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y5"}
+{29iddMPA:,    Y6,     Y_Bits,     6,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y6"}
+{29iddMPA:,    Y7,     Y_Bits,     7,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y7"}
+{29iddMPA:,    Y10,    Y_Bits,     010,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y10"}
+{29iddMPA:,    Y11,    Y_Bits,     011,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y11"}
+{29iddMPA:,    Y12,    Y_Bits,     012,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y12"}
+{29iddMPA:,    Y13,    Y_Bits,     013,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y13"}
+{29iddMPA:,    Y14,    Y_Bits,     014,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y14"}
+{29iddMPA:,    Y15,    Y_Bits,     015,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y15"}
+{29iddMPA:,    Y16,    Y_Bits,     016,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y16"}
+{29iddMPA:,    Y17,    Y_Bits,     017,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "Y17"}
+}
+
+# These are the Cn inputs done with bit access 
+
+file "$(MODBUS)\db\bi_bit.template" { pattern
+{P,           R,         PORT,             OFFSET,   ZNAM,   ONAM,  ZSV,       OSV,    SCAN, DESC}
+{29iddMPA:,    C0,     C_Bits,     0,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C0"}
+{29iddMPA:,    C1,     C_Bits,     1,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C1"}
+{29iddMPA:,    C2,     C_Bits,     2,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C2"}
+{29iddMPA:,    C3,     C_Bits,     3,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C3"}
+{29iddMPA:,    C4,     C_Bits,     4,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C4"}
+{29iddMPA:,    C5,     C_Bits,     5,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C5"}
+{29iddMPA:,    C6,     C_Bits,     6,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C6"}
+{29iddMPA:,    C7,     C_Bits,     7,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C7"}
+{29iddMPA:,    C10,    C_Bits,     010,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C10"}
+{29iddMPA:,    C11,    C_Bits,     011,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C11"}
+{29iddMPA:,    C12,    C_Bits,     012,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C12"}
+{29iddMPA:,    C13,    C_Bits,     013,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C13"}
+{29iddMPA:,    C14,    C_Bits,     014,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C14"}
+{29iddMPA:,    C15,    C_Bits,     015,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C15"}
+{29iddMPA:,    C16,    C_Bits,     016,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C16"}
+{29iddMPA:,    C17,    C_Bits,     017,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C17"}
+}
+
+# These are the Cn outputs done with bit access 
+
+file "$(MODBUS)\db\bo_bit.template" { pattern
+{P,           R,         PORT,             OFFSET,   ZNAM,   ONAM}
+{29iddMPA:,    C0O,     C_Bits_Out,     0,        Low,    High}
+{29iddMPA:,    C1O,     C_Bits_Out,     1,        Low,    High}
+{29iddMPA:,    C2O,     C_Bits_Out,     2,        Low,    High}
+{29iddMPA:,    C3O,     C_Bits_Out,     3,        Low,    High}
+{29iddMPA:,    C4O,     C_Bits_Out,     4,        Low,    High}
+{29iddMPA:,    C5O,     C_Bits_Out,     5,        Low,    High}
+{29iddMPA:,    C6O,     C_Bits_Out,     6,        Low,    High}
+{29iddMPA:,    C7O,     C_Bits_Out,     7,        Low,    High}
+{29iddMPA:,    C10O,    C_Bits_Out,     010,      Low,    High}
+{29iddMPA:,    C11O,    C_Bits_Out,     011,      Low,    High}
+{29iddMPA:,    C12O,    C_Bits_Out,     012,      Low,    High}
+{29iddMPA:,    C13O,    C_Bits_Out,     013,      Low,    High}
+{29iddMPA:,    C14O,    C_Bits_Out,     014,      Low,    High}
+{29iddMPA:,    C15O,    C_Bits_Out,     015,      Low,    High}
+{29iddMPA:,    C16O,    C_Bits_Out,     016,      Low,    High}
+{29iddMPA:,    C17O,    C_Bits_Out,     017,      Low,    High}
+}
+
+#word inputs from v600 for analog
+
+file "$(MODBUS)\db\ai.template" { pattern
+{      P,           R,            PORT,  OFFSET,   BITS,  EGUL,  EGUF, PREC,   EGU,       SCAN,   DESC}
+{29iddMPA:,    analog1,   V400,    0,       16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog1"}
+{29iddMPA:,    analog2,   V400,    2,       16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog2"}
+{29iddMPA:,    analog3,   V400,    4,       16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog3"}
+{29iddMPA:,    analog4,   V400,    6,       16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog4"}
+{29iddMPA:,    analog5,   V400,    010,     16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog5"}
+{29iddMPA:,    analog6,   V400,    012,     16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog6"}
+{29iddMPA:,    analog7,   V400,    014,     16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog7"}
+{29iddMPA:,    analog8,   V400,    016,     16,   1.0,    0.,    0,  Volts, "I/O Intr", "Analog8"}
+}
+
+file "$(MODBUS)\db\ai.template" { pattern
+{      P,           R,            PORT,  OFFSET,   BITS,  EGUL,  EGUF, PREC,   EGU,       SCAN,   DESC}
+{29iddMPA:,    bcd1,   V500,    0,       16,   1.0,    0.,    0,  Volts, "I/O Intr", "bcd1"}
+{29iddMPA:,    bcd2,   V500,    010,       16,   1.0,    0.,    0,  Volts, "I/O Intr", "bcd2"}
+}
+
+
+file "$(MODBUS)\db\aiFloat64.template" { pattern
+{      P,           R,            PORT,  OFFSET,   DATA_TYPE,  LOPR,  HOPR, PREC,   EGU,       SCAN,   DESC}
+{29iddMPA:,    real1,   V514,    0,     FLOAT32_LE,   0,    10,    0,  Volts, "I/O Intr", "Analog7"}
+{29iddMPA:,    real2,   V514,    4,     FLOAT32_LE,   0,    10,    0,  Volts, "I/O Intr", "Analog7"}
+}
+
+# These are the Cn inputs done with bit access 
+
+file "$(MODBUS)\db\bi_bit.template" { pattern
+{P,           R,         PORT,             OFFSET,   ZNAM,   ONAM,  ZSV,       OSV,    SCAN, DESC}
+{29iddMPA:,    SP0,     SP_Bits,     0,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C0"}
+{29iddMPA:,    SP1,     SP_Bits,     1,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C1"}
+{29iddMPA:,    SP2,     SP_Bits,     2,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C2"}
+{29iddMPA:,    SP3,     SP_Bits,     3,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C3"}
+{29iddMPA:,    SP4,     SP_Bits,     4,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C4"}
+{29iddMPA:,    SP5,     SP_Bits,     5,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C5"}
+{29iddMPA:,    SP6,     SP_Bits,     6,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C6"}
+{29iddMPA:,    SP7,     SP_Bits,     7,        Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C7"}
+{29iddMPA:,    SP10,    SP_Bits,     010,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C10"}
+{29iddMPA:,    SP11,    SP_Bits,     011,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C11"}
+{29iddMPA:,    SP12,    SP_Bits,     012,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C12"}
+{29iddMPA:,    SP13,    SP_Bits,     013,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C13"}
+{29iddMPA:,    SP14,    SP_Bits,     014,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C14"}
+{29iddMPA:,    SP15,    SP_Bits,     015,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C15"}
+{29iddMPA:,    SP16,    SP_Bits,     016,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C16"}
+{29iddMPA:,    SP17,    SP_Bits,     017,      Low,    High,  NO_ALARM,  MAJOR,  "I/O Intr", "C17"}
+}
+
+
+

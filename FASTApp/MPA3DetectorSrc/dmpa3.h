@@ -206,6 +206,9 @@ typedef VOID (WINAPI *IMPAHALT) (int nSystem);         // Halt
 typedef VOID (WINAPI *IMPACONTINUE) (int nSystem);     // Continue
 typedef VOID (WINAPI *IMPAERASE) (int nSystem);        // Erase spectrum
 typedef VOID (WINAPI *IMPANEWSET) (int nDisplay);        // Indicate New Settings
+
+typedef int (WINAPI *IMPALVGetDat) (unsigned long *datp, int nDisplay);
+
 #endif
 
 #ifdef __cplusplus

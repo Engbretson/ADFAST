@@ -37,7 +37,7 @@ class epicsShareClass MPA3Detector : public asynNDArrayDriver {
 public:
     MPA3Detector(const char *portName, int numTimePoints, NDDataType_t dataType,
                    int maxBuffers, size_t maxMemory,
-                   int priority, int stackSize);
+                   int priority, int stackSize, int channelNum);
  
  virtual ~MPA3Detector();
 
@@ -96,27 +96,29 @@ private:
     int uniqueId_;
     int acquiring_;
     double elapsedTime_;
+	int channelNum;
 
     // HANDLE hDLL;
-    HMODULE hDLL;
-    IMPAGETSETTING lpSet;
-    IMPANEWSTATUS lpNewStat;
-    IMPAGETSTATUS lpStat;
-    IMPARUNCMD lpRun;
-    IMPAGETCNT lpCnt;
-    IMPAGETROI lpRoi;
-    IMPAGETDAT lpDat;
-    IMPAGETSTR lpStr;
-    IMPASERVEXEC lpServ;
-    IMPAGETDATSET lpGetDatSet;
-    IMPAGETMP3SET lpGetMp3Set;
-    IMPADIGINOUT lpDigInOut;
-    IMPADACOUT lpDacOut;
-    IMPASTART lpStart;
-    IMPAHALT lpHalt;
-    IMPACONTINUE lpContinue;
-    IMPAERASE lpErase;
-    IMPANEWSET lpNewSetting;
+    HMODULE hDLL = 0;
+	IMPAGETSETTING lpSet = NULL;
+    IMPANEWSTATUS lpNewStat = NULL;
+    IMPAGETSTATUS lpStat = NULL;
+    IMPARUNCMD lpRun = NULL;
+    IMPAGETCNT lpCnt = NULL;
+    IMPAGETROI lpRoi = NULL;
+    IMPAGETDAT lpDat = NULL;
+    IMPAGETSTR lpStr = NULL;
+    IMPASERVEXEC lpServ = NULL;
+    IMPAGETDATSET lpGetDatSet = NULL;
+    IMPAGETMP3SET lpGetMp3Set = NULL;
+    IMPADIGINOUT lpDigInOut = NULL;
+    IMPADACOUT lpDacOut = NULL;
+    IMPASTART lpStart = NULL;
+    IMPAHALT lpHalt = NULL;
+    IMPACONTINUE lpContinue = NULL;
+    IMPAERASE lpErase = NULL;
+    IMPANEWSET lpNewSetting = NULL;
+	IMPALVGetDat lpLVGetDat = NULL;
 
     ACQSETTING Setting;
     ACQDATA Data;

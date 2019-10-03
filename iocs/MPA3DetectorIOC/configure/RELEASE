@@ -7,3 +7,6 @@ ADFAST = $(TOP)/../..
 -include $(TOP)/../../../configure/RELEASE_PRODS_INCLUDE
 -include $(TOP)/RELEASE.local
 -include $(TOP)/configure/RELEASE.local
+
+MODBUS=$(SUPPORT)/modbus-R3-0
+

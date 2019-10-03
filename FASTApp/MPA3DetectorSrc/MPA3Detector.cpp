@@ -48,9 +48,10 @@ static void mpaTaskC(void *drvPvt)
   *            allowed to allocate. Set this to -1 to allow an unlimited amount of memory.
   * \param[in] priority The thread priority for the asyn port driver thread if ASYN_CANBLOCK is set in asynFlags.
   * \param[in] stackSize The stack size for the asyn port driver thread if ASYN_CANBLOCK is set in asynFlags.
+  * \param[in] channelNum, this specifies which of the 4 different data arrays that we will use by default.
   */
 MPA3Detector::MPA3Detector(const char *portName, int numTimePoints, NDDataType_t dataType,
-                               int maxBuffers, size_t maxMemory, int priority, int stackSize)
+                               int maxBuffers, size_t maxMemory, int priority, int stackSize, int channelNum)
 
 //    : asynNDArrayDriver(portName, MAX_SIGNALS, NUM_MPA_DETECTOR_PARAMS, maxBuffers, maxMemory,
 //               0, 0, /* No interfaces beyond those set in ADDriver.cpp */
@@ -58,7 +59,7 @@ MPA3Detector::MPA3Detector(const char *portName, int numTimePoints, NDDataType_t
 //               1,                                /* autoConnect=1 */
 //               priority, stackSize),
 //    uniqueId_(0), acquiring_(0)
-
+// AD > 3.0 change
     : asynNDArrayDriver(portName, MAX_SIGNALS, maxBuffers, maxMemory,
                0, 0, /* No interfaces beyond those set in ADDriver.cpp */
                ASYN_CANBLOCK | ASYN_MULTIDEVICE, /* asyn flags*/
@@ -71,17 +72,123 @@ MPA3Detector::MPA3Detector(const char *portName, int numTimePoints, NDDataType_t
     const char *functionName = "MPA3Detector";
 
     hDLL = LoadLibrary("DMPA3.DLL");
+	
     if(hDLL){
+
+//
+// Original entry points
+//
+ 
+// VOID APIENTRY RunCmd(int nDisplay, LPSTR Cmd)
         lpRun=(IMPARUNCMD)GetProcAddress(hDLL,"RunCmd");
+
+// VOID APIENTRY Erase(int nSystem)
         lpErase=(IMPAERASE)GetProcAddress(hDLL,"Erase");
+
+// VOID APIENTRY Halt(int nSystem)
         lpHalt=(IMPAHALT)GetProcAddress(hDLL,"Halt");
-        lpStart=(IMPASTART)GetProcAddress(hDLL,"Start");
-	lpNewSetting=(IMPANEWSET)GetProcAddress(hDLL,"NewSetting");
+
+//VOID APIENTRY Start(int nSystem)
+         lpStart=(IMPASTART)GetProcAddress(hDLL,"Start");
+
+// VOID APIENTRY NewSetting(int nDev) 
+	lpNewSetting=(IMPANEWSET) GetProcAddress(hDLL,"NewSetting");
+
+// int APIENTRY GetStatusData(ACQSTATUS *Status, int nDev) 
         lpStat=(IMPAGETSTATUS)GetProcAddress(hDLL,"GetStatusData");
+
+// int APIENTRY GetStatus(int nDev)
 	lpNewStat=(IMPANEWSTATUS)GetProcAddress(hDLL,"GetStatus");
+
+// int APIENTRY GetSettingData(ACQSETTING *Setting, int nDisplay)
 	lpSet=(IMPAGETSETTING)GetProcAddress(hDLL,"GetSettingData");
+
+//int APIENTRY GetDatSetting(DATSETTING *Defdat) 
 	lpGetDatSet=(IMPAGETDATSET)GetProcAddress(hDLL,"GetDatSetting");
+
+// int APIENTRY GetMP3Setting(ACQMP3 *Defmp3)
 	lpGetMp3Set=(IMPAGETMP3SET)GetProcAddress(hDLL,"GetMP3Setting");
+
+//
+// additional entry points
+//
+
+// int APIENTRY LVGetCnt(double *cntp, int nDisplay);
+lpCnt=(IMPAGETCNT)GetProcAddress(hDLL,"LVGetCnt");
+
+// int APIENTRY LVGetRoi(unsigned long FAR *roip, int nDisplay);
+lpRoi=(IMPAGETROI)GetProcAddress(hDLL,"LVGetRoi");
+
+// int APIENTRY LVGetDat(unsigned long HUGE *datp, int nDisplay);
+lpDat=(IMPAGETDAT)GetProcAddress(hDLL,"LVGetDat");
+
+// int APIENTRY LVGetStr(char *strp, int nDisplay);
+lpStr=(IMPAGETSTR)GetProcAddress(hDLL,"LVGetStr");
+
+// UINT APIENTRY ServExec(HWND ClientWnd);// Execute the Server MPA3.EXE
+lpServ=(IMPASERVEXEC)GetProcAddress(hDLL,"ServExec");
+
+// int APIENTRY DigInOut(int value, int enable); 
+lpDigInOut=(IMPADIGINOUT)GetProcAddress(hDLL,"DigInOut");
+
+// int APIENTRY DacOut(int value);  
+lpDacOut=(IMPADACOUT)GetProcAddress(hDLL,"DacOut");
+
+// VOID APIENTRY Continue(int nSystem); 
+lpContinue=(IMPACONTINUE)GetProcAddress(hDLL,"Continue");
+
+lpLVGetDat = (IMPALVGetDat)GetProcAddress(hDLL, "LVGetDat");
+
+//
+// Potential future entry points
+//
+
+// VOID APIENTRY StoreSettingData(ACQSETTING *Setting, int nDisplay);
+// VOID APIENTRY StoreStatusData(ACQSTATUS *Status, int nDev);
+// VOID APIENTRY StoreData(ACQDATA *Data, int nDisplay);
+// int APIENTRY GetData(ACQDATA *Data, int nDisplay);
+// long APIENTRY GetSpec(long i, int nDisplay);
+// VOID APIENTRY SaveSetting(void);         
+// VOID APIENTRY SaveData(int nDisplay, int all
+// VOID APIENTRY GetBlock(long *hist, int start, int end, int step, int nDisplay);                           
+// VOID APIENTRY StoreDefData(ACQDEF *Def);
+// int APIENTRY GetDefData(ACQDEF *Def);	   
+// VOID APIENTRY LoadData(int nDisplay, int all);     
+// VOID APIENTRY NewData(void);             
+// VOID APIENTRY HardwareDlg(int item);     
+// VOID APIENTRY UnregisterClient(void);    
+// VOID APIENTRY DestroyClient(void);       
+// UINT APIENTRY ClientExec(HWND ServerWnd);// Execute the Client MPANT.EXE
+// VOID APIENTRY AddData(int nDisplay, int all);      
+// VOID APIENTRY SubData(int nDisplay, int all);      
+// VOID APIENTRY Smooth(int nDisplay);       
+// int APIENTRY LVGetOneRoi(int nDisplay, int roinum, long *x1, long *x2);	
+// int APIENTRY LVGetOneCnt(double *cntp, int nDisplay, int cntnum);
+
+// VOID APIENTRY StoreMP3Setting(ACQMP3 *Defmp3);
+// VOID APIENTRY StoreDatSetting(DATSETTING *Defdat);
+// VOID APIENTRY StoreReplaySetting(REPLAYSETTING *Repldat);
+// int APIENTRY GetReplaySetting(REPLAYSETTING *Repldat);
+// int APIENTRY GetDatPtr(int nDisplay, long *xmax, long *ymax, LPSTR *pt);
+// int APIENTRY ReleaseDatPtr(void);
+// long APIENTRY GetSVal(int DspID, long xval);
+ 
+ 
+// long APIENTRY GetRoiIndex(LPSTR roiname);
+// int APIENTRY DeleteRoi(DWORD roiindex);
+// int APIENTRY SelectRoi(DWORD roiindex);
+// int APIENTRY GetRoiSum(DWORD roiindex, double *sum);
+// int APIENTRY BytearrayToShortarray(short *Shortarray, char *Bytearray, int length);
+// int APIENTRY LVGetRoinam(char *strp, int nDisplay);
+// int APIENTRY LVGetSpecLength(int nDisplay);
+// int APIENTRY LVGetDefData(LVACQDEF *Def);
+// int APIENTRY LVGetDatSetting(LVDATSETTING *Defdat, LPSTR filename, LPSTR specfile, LPSTR command);
+// int APIENTRY LVGetReplaySetting(LVREPLAYSETTING *Repldat, LPSTR filename);
+// int APIENTRY LVGetProiDat(int roiid, int x0, int y0, int xdim, int ydim, double *roisum, int *datp);
+// int APIENTRY LVGetRoiRect(int nDisplay, int roinum, int *x0, int *y0, int *xdim, int *ydim, int *xmax);
+// int APIENTRY LVGetRroiDat(int nDisplay, int roinum, int x0, int y0, int xdim, // int ydim, int xmax, double *RoiSum, long *datp, double *area);
+
+
     }
     else { 
         printf("%s:%s Windows LoadLibray Failure\n",
@@ -280,7 +387,7 @@ printf("dwelltime= %lg\n", Set->dwelltime);
 }
 
 
-
+#ifdef LEGACY
 /** Template function to compute the simulated detector data for any data type */
 template <typename epicsType> void MPA3Detector::computeArraysT()
 {
@@ -405,6 +512,86 @@ void MPA3Detector::computeArrays()
             break;
     }
 }
+#endif
+
+void MPA3Detector::computeArrays()
+{
+    long xx = 0, yy= 0 , maxvalue = 0;
+	
+	size_t dims[2];
+	int numTimePoints;
+//	int i; 
+//	int j;
+	NDDataType_t dataType;
+	epicsType *pData;
+	uint32_t size = 0;
+	double acquireTime;
+	double timeStep;
+//	double rndm;
+//	double amplitude[MAX_SIGNALS];
+//	double period[MAX_SIGNALS];
+//	double frequency[MAX_SIGNALS];
+//	double phase[MAX_SIGNALS];
+//	double noise[MAX_SIGNALS];
+//	double offset[MAX_SIGNALS];
+//    NDArray *pImage;
+
+	getIntegerParam(NDDataType, (int *)&dataType);
+	getIntegerParam(P_NumTimePoints, &numTimePoints);
+	getDoubleParam(P_TimeStep, &timeStep);
+	getDoubleParam(P_AcquireTime, &acquireTime);
+
+//	dims[0] = MAX_SIGNALS;
+//	dims[1] = numTimePoints;
+
+	dims[0] = 1024;
+	dims[1] = 1024;
+	dataType = NDUInt32;
+//	epicsType = epicsUInt16;
+
+	size = dims[0] * dims[1] * sizeof(uint32_t);
+	
+	setIntegerParam(NDDataType, NDUInt32);
+
+//	printf(" dims0 %d dims1 %d \n", dims[0], dims[1]);
+
+	if (this->pArrays[0]) this->pArrays[0]->release();
+	this->pArrays[0] = pNDArrayPool->alloc(2, dims, dataType, 0, 0);
+	pData = (epicsType *)this->pArrays[0]->pData;
+	
+	memset(pData, 0, 1024 * 1024 * sizeof(epicsType));
+		
+// The actual code that gets the data
+
+	unsigned long *data;
+	int ii = 2;
+      int err;
+
+	data = (unsigned long *)calloc(1024 * 1024, sizeof(long));
+	if (lpLVGetDat) err = (*lpLVGetDat) (data, ii);
+
+//    memcpy(pImage->pData, data, size);
+	
+    for (int jj=0; jj < 1024; jj++) {
+	for (int kk=0; kk < 1024; kk++) {
+	
+//	printf(" jj %d kk %d \n",jj,kk);
+		
+	data[(jj*1024)+kk] = jj;
+	
+////	pData[(jj*1024)+kk] = (epicsType) data[(jj*1024)+kk];	
+if (data[(jj*1024)+kk] > maxvalue){	
+	maxvalue = data[(jj*1024)+kk];
+	xx=jj;
+	yy=kk;
+}
+}
+	}
+printf("Max Value seen at (%d,%d) %d \n",xx,yy,maxvalue);
+
+
+
+}
 
 void MPA3Detector::setAcquire(int value)
 {
@@ -479,7 +666,10 @@ void MPA3Detector::mpaTask()
 	setIntegerParam(P_Acquire, 0);
 
         /* Update the data */
+ //       printf("before Computer arrays \n");
         computeArrays();
+ //      printf("after Compute arrays \n");
+
 
         pImage = this->pArrays[0];
 
@@ -673,12 +863,14 @@ void MPA3Detector::report(FILE *fp, int details)
 
 /** Configuration command, called directly or from iocsh */
 extern "C" int MPA3DetectorConfig(const char *portName, int numTimePoints, int dataType,
-                                 int maxBuffers, int maxMemory, int priority, int stackSize)
+                                 int maxBuffers, int maxMemory, int priority, int stackSize, 
+								 int channelNum)
 {
     new MPA3Detector(portName, numTimePoints, (NDDataType_t)dataType,
                     (maxBuffers < 0) ? 0 : maxBuffers,
                     (maxMemory < 0) ? 0 : maxMemory, 
-                    priority, stackSize);
+                    priority, stackSize, 
+					channelNum);
     return(asynSuccess);
 }
 
@@ -690,18 +882,22 @@ static const iocshArg MPA3DetectorConfigArg3 = {"maxBuffers",    iocshArgInt};
 static const iocshArg MPA3DetectorConfigArg4 = {"maxMemory",     iocshArgInt};
 static const iocshArg MPA3DetectorConfigArg5 = {"priority",      iocshArgInt};
 static const iocshArg MPA3DetectorConfigArg6 = {"stackSize",     iocshArgInt};
+static const iocshArg MPA3DetectorConfigArg7 = {"channelNum",    iocshArgInt};
+
 static const iocshArg * const MPA3DetectorConfigArgs[] = {&MPA3DetectorConfigArg0,
                                                             &MPA3DetectorConfigArg1,
                                                             &MPA3DetectorConfigArg2,
                                                             &MPA3DetectorConfigArg3,
                                                             &MPA3DetectorConfigArg4,
                                                             &MPA3DetectorConfigArg5,
-                                                            &MPA3DetectorConfigArg6};
-static const iocshFuncDef configMPA3Detector = {"MPA3DetectorConfig", 7, MPA3DetectorConfigArgs};
+                                                            &MPA3DetectorConfigArg6,
+											                &MPA3DetectorConfigArg7,
+															};
+static const iocshFuncDef configMPA3Detector = {"MPA3DetectorConfig", 8, MPA3DetectorConfigArgs};
 static void configMPA3DetectorCallFunc(const iocshArgBuf *args)
 {
     MPA3DetectorConfig(args[0].sval, args[1].ival, args[2].ival, args[3].ival,
-                         args[4].ival, args[5].ival, args[6].ival);
+                         args[4].ival, args[5].ival, args[6].ival, args[7].ival);
 }
 
 
