@@ -26,6 +26,7 @@ DBD += MPA3DetectorSupport.dbd
 	$(DBD_NAME)_DBD  += drvAsynIPPort.dbd
 	$(DBD_NAME)_DBD  += drvAsynSerialPort.dbd
     $(DBD_NAME)_DBD  += modbusSupport.dbd
+    $(DBD_NAME)_DBD += modbus.dbd
     PROD_LIBS        += modbus
   endif
 

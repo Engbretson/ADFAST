@@ -23,11 +23,11 @@ PROD_SRCS_vxWorks += $(PROD_NAME)_registerRecordDeviceDriver.cpp
 
 PROD_LIBS += MPA3Detector
 
-
   
  ifdef MODBUS
 	$(DBD_NAME)_DBD += drvAsynIPPort.dbd
 	$(DBD_NAME)_DBD += drvAsynSerialPort.dbd
+	$(DBD_NAME)_DBD += modbus.dbd
     $(DBD_NAME)_DBD += modbusSupport.dbd
     PROD_LIBS        += modbus
   endif

@@ -31,10 +31,17 @@ static const char *driverName = "MPA3Detector";
 
 static void mpaTaskC(void *drvPvt)
 {
-    MPA3Detector *pPvt = (MPA3Detector *)drvPvt;
-
+    MPA3Detector *pPvt = (MPA3Detector *)drvPvt; 
     pPvt->mpaTask();
+	
 }
+static void mpaTaskCBackground(void *drvPvt)
+{
+    MPA3Detector *pPvt = (MPA3Detector *)drvPvt; 
+    pPvt->mpaTaskBackground();
+
+}
+
 
 /** Constructor for MPA3Detector; most parameters are simply passed to ADDriver::ADDriver.
   * After calling the base class constructor this method creates a thread to compute the simulated detector data,
@@ -70,6 +77,8 @@ MPA3Detector::MPA3Detector(const char *portName, int numTimePoints, NDDataType_t
     int status = asynSuccess;
     int ErrSet;
     const char *functionName = "MPA3Detector";
+
+    this->channelNum = channelNum;
 
     hDLL = LoadLibrary("DMPA3.DLL");
 	
@@ -272,6 +281,18 @@ lpLVGetDat = (IMPALVGetDat)GetProcAddress(hDLL, "LVGetDat");
             driverName, functionName);
         return;
     }
+    /* Create the thread that updates the images */
+    status = (epicsThreadCreate("mpaDetTaskBackground",
+                                epicsThreadPriorityMedium,
+                                epicsThreadGetStackSize(epicsThreadStackMedium),
+                                (EPICSTHREADFUNC)mpaTaskCBackground,
+                                this) == NULL);
+    if (status) {
+        printf("%s:%s epicsThreadCreate failure for simulation task\n",
+            driverName, functionName);
+        return;
+    }
+
 }
 
 /**
@@ -387,134 +408,9 @@ printf("dwelltime= %lg\n", Set->dwelltime);
 }
 
 
-#ifdef LEGACY
-/** Template function to compute the simulated detector data for any data type */
-template <typename epicsType> void MPA3Detector::computeArraysT()
-{
-    size_t dims[2];
-    int numTimePoints;
-    int i, j;
-    NDDataType_t dataType;
-    epicsType *pData;
-    double acquireTime;
-    double timeStep;
-    double rndm;
-    double amplitude[MAX_SIGNALS];
-    double period[MAX_SIGNALS];
-    double frequency[MAX_SIGNALS];
-    double phase[MAX_SIGNALS];
-    double noise[MAX_SIGNALS];
-    double offset[MAX_SIGNALS];
-    
-    getIntegerParam(NDDataType, (int *)&dataType);
-    getIntegerParam(P_NumTimePoints, &numTimePoints);
-    getDoubleParam(P_TimeStep, &timeStep);
-    getDoubleParam(P_AcquireTime, &acquireTime);
 
-    dims[0] = MAX_SIGNALS;
-    dims[1] = numTimePoints;
 
-    if (this->pArrays[0]) this->pArrays[0]->release();
-    this->pArrays[0] = pNDArrayPool->alloc(2, dims, dataType, 0, 0);
-    pData = (epicsType *)this->pArrays[0]->pData;
-    memset(pData, 0, MAX_SIGNALS * numTimePoints * sizeof(epicsType));
-
-    for (j=0; j<MAX_SIGNALS; j++) {
-        getDoubleParam(j, P_Amplitude, amplitude+j);
-        getDoubleParam(j, P_Offset,    offset+j);
-        getDoubleParam(j, P_Period,    period+j);
-        frequency[j] = 1. / period[j];
-        setDoubleParam(j, P_Frequency, frequency[j]);
-        getDoubleParam(j, P_Phase,     phase+j);
-        getDoubleParam(j, P_Noise,     noise+j);
-        phase[j] = phase[j]/360.0;
-    }
-    for (i=0; i<numTimePoints; i++) {
-        rndm = 2.*(rand()/(double)RAND_MAX - 0.5);
-        // Signal 0 is a sin wave
-        j = 0;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] * 
-                                               sin((elapsedTime_ * frequency[j] + phase[j]) * 2. * M_PI));
-        // Signal 1 is a cos wave
-        j = 1;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] * 
-                                               cos((elapsedTime_ * frequency[j] + phase[j]) * 2. * M_PI));
-        // Signal 2 is a square wave
-        j = 2;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] * 
-                                              (sin((elapsedTime_ * frequency[j] + phase[j]) * 2. * M_PI) > 0 ? 1.0 : -1.0));
-        // Signal 3 is a sawtooth
-        j = 3;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] * 
-                                               -2.0/M_PI * atan(1./tan((elapsedTime_ * frequency[j] + phase[j]) * M_PI)));
-        // Signal 4 is white noise
-        j = 4;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] * rndm);
-
-        // Signal 5 is signal 0 + signal 1
-        j = 5;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] * 
-                                               pData[MAX_SIGNALS*i + 0] + pData[MAX_SIGNALS*i + 1]) ;
-
-        // Signal 6 is signal 0 * signal 1
-        j = 6;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] * 
-                                               pData[MAX_SIGNALS*i + 0] * pData[MAX_SIGNALS*i + 1]) ;
-
-        // Signal 7 is 4 sin waves
-        j = 7;
-        pData[MAX_SIGNALS*i + j] = (epicsType)(offset[j] + noise[j] * rndm + amplitude[j] *
-                                              (sin((elapsedTime_ * 1.*frequency[j] + phase[j]) * 2. * M_PI) +
-                                               sin((elapsedTime_ * 2.*frequency[j] + phase[j]) * 2. * M_PI) +
-                                               sin((elapsedTime_ * 3.*frequency[j] + phase[j]) * 2. * M_PI) +
-                                               sin((elapsedTime_ * 4.*frequency[j] + phase[j]) * 2. * M_PI)));
-
-        elapsedTime_ += timeStep;
-	//        if ((acquireTime > 0) && (elapsedTime_ > acquireTime)) {
-	//            setAcquire(0);
-	//            setIntegerParam(P_Acquire, 0);
-	//            break;
-	//        }
-    }
-    setDoubleParam(P_ElapsedTime, elapsedTime_);
-}
-
-/** Computes the new image data */
-void MPA3Detector::computeArrays()
-{
-    int dataType;
-    getIntegerParam(NDDataType, &dataType); 
-
-    switch (dataType) {
-        case NDInt8:
-            computeArraysT<epicsInt8>();
-            break;
-        case NDUInt8:
-            computeArraysT<epicsUInt8>();
-            break;
-        case NDInt16:
-            computeArraysT<epicsInt16>();
-            break;
-        case NDUInt16:
-            computeArraysT<epicsUInt16>();
-            break;
-        case NDInt32:
-            computeArraysT<epicsInt32>();
-            break;
-        case NDUInt32:
-            computeArraysT<epicsUInt32>();
-            break;
-        case NDFloat32:
-            computeArraysT<epicsFloat32>();
-            break;
-        case NDFloat64:
-            computeArraysT<epicsFloat64>();
-            break;
-    }
-}
-#endif
-
-void MPA3Detector::computeArrays()
+void MPA3Detector::computeArrays(int verbose = 0)
 {
     long xx = 0, yy= 0 , maxvalue = 0;
 	
@@ -564,11 +460,11 @@ void MPA3Detector::computeArrays()
 // The actual code that gets the data
 
 	unsigned long *data;
-	int ii = 2;
+//	int ii = 2;
       int err;
 
 	data = (unsigned long *)calloc(1024 * 1024, sizeof(long));
-	if (lpLVGetDat) err = (*lpLVGetDat) (data, ii);
+	if (lpLVGetDat) err = (*lpLVGetDat) (data, abs(this->channelNum));
 
 //    memcpy(pImage->pData, data, size);
 	
@@ -577,9 +473,9 @@ void MPA3Detector::computeArrays()
 	
 //	printf(" jj %d kk %d \n",jj,kk);
 		
-	data[(jj*1024)+kk] = jj;
+//	data[(jj*1024)+kk] = jj;
 	
-////	pData[(jj*1024)+kk] = (epicsType) data[(jj*1024)+kk];	
+	pData[(jj*1024)+kk] = (epicsType) data[(jj*1024)+kk];	
 if (data[(jj*1024)+kk] > maxvalue){	
 	maxvalue = data[(jj*1024)+kk];
 	xx=jj;
@@ -587,11 +483,16 @@ if (data[(jj*1024)+kk] > maxvalue){
 }
 }
 	}
+	if (verbose != 0) {
 printf("Max Value seen at (%d,%d) %d \n",xx,yy,maxvalue);
+}
+
 
 
 
 }
+
+
 
 void MPA3Detector::setAcquire(int value)
 {
@@ -667,7 +568,7 @@ void MPA3Detector::mpaTask()
 
         /* Update the data */
  //       printf("before Computer arrays \n");
-        computeArrays();
+        computeArrays(1);
  //      printf("after Compute arrays \n");
 
 
@@ -704,6 +605,64 @@ void MPA3Detector::mpaTask()
 	//        epicsThreadSleep(numTimePoints * timeStep);
 	//        lock();
     }
+}
+
+/**
+This loop is designed to run about periodically ( 1 sec ?) so that a caqtdm cacamera widget can be displaying what the vendor software
+is doing. A standard collect and acquire is expensive many, many second, so just displaying what it already has save a lot of time.
+So do this when idle and hope for the best.
+*/
+
+void MPA3Detector::mpaTaskBackground()
+{
+    int status = asynSuccess;
+    NDArray *pImage;
+    epicsTimeStamp startTime;
+    //    int numTimePoints;
+//    int arrayCounter;
+    //    double timeStep;
+
+    int i;
+    const char *functionName = "mpaTaskBackground";
+
+//printf("In mpaTaskBackground %d\n",channelNum);
+
+    /* Loop forever */
+
+    while (1) {
+       this->unlock();
+	   epicsThreadSleep(1.0);
+
+ //       printf("In the mpaTaskBackground loop %d\n",channelNum);	
+	   this->lock();
+	   if (this->channelNum > 0) {
+
+        computeArrays(0);
+
+        pImage = this->pArrays[0];
+
+        /* Put the frame number and time stamp into the buffer */
+        pImage->uniqueId = uniqueId_;
+        epicsTimeGetCurrent(&startTime);
+        pImage->timeStamp = startTime.secPastEpoch + startTime.nsec / 1.e9;
+        updateTimeStamp(&pImage->epicsTS);
+
+        /* Get any attributes that have been defined for this driver */
+        this->getAttributes(pImage->pAttributeList);
+
+        /* Call the NDArray callback */
+        /* Must release the lock here, or we can get into a deadlock, because we can
+         * block on the plugin lock, and the plugin can be calling us */
+        this->unlock();
+        doCallbacksGenericPointer(pImage, NDArrayData, 0);
+        this->lock();
+
+        /* Call the callbacks to update any changes */
+        for (i=0; i<MAX_SIGNALS; i++) {
+            callParamCallbacks(i);
+        }
+    }
+	}
 }
 
 

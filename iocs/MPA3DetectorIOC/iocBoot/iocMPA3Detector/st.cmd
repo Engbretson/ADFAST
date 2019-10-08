@@ -29,14 +29,14 @@ epicsEnvSet("CBUFFS", "500")
 
 epicsEnvSet("EPICS_DB_INCLUDE_PATH", "$(ADCORE)/db")
 
-epicsEnvSet("T1", "Sin(x)")
-epicsEnvSet("T2", "Cos(x)")
-epicsEnvSet("T3", "SquareWave(x)")
-epicsEnvSet("T4", "Sawtooth(x)")
-epicsEnvSet("T5", "Noise")
-epicsEnvSet("T6", "Sin(x)+Cos(x)")
-epicsEnvSet("T7", "Sin(x)*Cos(x)")
-epicsEnvSet("T8", "SinSums")
+#epicsEnvSet("T1", "Sin(x)")
+#epicsEnvSet("T2", "Cos(x)")
+#epicsEnvSet("T3", "SquareWave(x)")
+#epicsEnvSet("T4", "Sawtooth(x)")
+#epicsEnvSet("T5", "Noise")
+#epicsEnvSet("T6", "Sin(x)+Cos(x)")
+#epicsEnvSet("T7", "Sin(x)*Cos(x)")
+#epicsEnvSet("T8", "SinSums")
 
 asynSetMinTimerPeriod(0.001)
 
@@ -54,15 +54,29 @@ asynSetMinTimerPeriod(0.001)
 
 # Create an ADCimDetector driver
 # MPA3DetectorConfig(const char *portName, int numTimePoints, int dataType,
-#                      int maxBuffers, int maxMemory, int priority, int stackSize)
-MPA3DetectorConfig("$(PORT)", $(YSIZE), 7, 0, 0)
-dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det1:,  PORT=$(PORT),ADDR=0,TIMEOUT=1")
+#                      int maxBuffers, int maxMemory, int priority, int stackSize, int channelNum)
 
+MPA3DetectorConfig("$(PORT)", $(YSIZE), 7, 0, 0, 0, 0, -2)
+dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det1:,  PORT=$(PORT),ADDR=0,TIMEOUT=1")
 
 # Create a standard arrays plugin, set it to get data from ADCSDetector driver.
 NDStdArraysConfigure("Image1", 3, 0, "$(PORT)", 0)
+
 # This creates a waveform large enough for 100000x8 arrays.
 dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image1:,PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT),TYPE=Float64,FTVL=DOUBLE,NELEMENTS=800000")
+
+# make 3 others to get all the real time arrays
+MPA3DetectorConfig("MCP2", $(YSIZE), 7, 0, 0, 0, 0, 2)
+dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det2:,  PORT="MCP2",ADDR=0,TIMEOUT=1")
+
+# Create a standard arrays plugin, set it to get data from ADCSDetector driver.
+##NDStdArraysConfigure("Image2", 3, 0, "MCP2", 0)
+# Create a standard arrays plugin, set it to get data from ADCSDetector driver.
+
+# these may or may not be required
+# This creates a waveform large enough for 100000x8 arrays.
+dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image2:,PORT=Image2,ADDR=0,TIMEOUT=1,NDARRAY_PORT="MCP2",TYPE=Float64,FTVL=DOUBLE,NELEMENTS=800000")
+
 
 ## Load all other plugins using commonPlugins.cmd
 < $(ADCORE)/iocBoot/commonPlugins.cmd
@@ -71,6 +85,7 @@ set_requestfile_path("$(ADFAST)/FASTApp/Db")
 #asynSetTraceIOMask("$(PORT)",0,2)
 #asynSetTraceMask("$(PORT)",0,255)
 
+# The equipment EPS 
 < modbus.cmd
 
 iocInit()

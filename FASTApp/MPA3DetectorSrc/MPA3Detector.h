@@ -49,6 +49,7 @@ public:
 
     virtual void report(FILE *fp, int details);
     void mpaTask(); /**< Should be private, but gets called from C, so must be public */
+    void mpaTaskBackground(); /**< Should be private, but gets called from C, so must be public */
 
 protected:
     int P_Acquire;
@@ -75,7 +76,7 @@ protected:
 private:
     /* These are the methods that are new to this class */
     template <typename epicsType> void computeArraysT();
-    void computeArrays();
+    void computeArrays(int value);
     void setAcquire(int value);
     int getStatus();
     int getSettings();
