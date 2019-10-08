@@ -16,9 +16,9 @@ epicsEnvSet("PORT",   "MCP1")
 # The queue size for all plugins
 epicsEnvSet("QSIZE",  "20")
 # The maximim image width; used for row profiles in the NDPluginStats plugin
-epicsEnvSet("XSIZE",  "8")
+epicsEnvSet("XSIZE",  "1024")
 # The maximim image height; used for column profiles in the NDPluginStats plugin
-epicsEnvSet("YSIZE",  "2000")
+epicsEnvSet("YSIZE",  "1024")
 # The maximum number of time series points in the NDPluginStats plugin
 epicsEnvSet("NCHANS", "2048")
 # The maximum number of time series points in the NDPluginTimeSeries plugin
@@ -56,18 +56,18 @@ asynSetMinTimerPeriod(0.001)
 # MPA3DetectorConfig(const char *portName, int numTimePoints, int dataType,
 #                      int maxBuffers, int maxMemory, int priority, int stackSize, int channelNum)
 
-MPA3DetectorConfig("$(PORT)", $(YSIZE), 7, 0, 0, 0, 0, -2)
+MPA3DetectorConfig("$(PORT)", $(YSIZE), 7, 0, 0, 0, 0, 2)
 dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det1:,  PORT=$(PORT),ADDR=0,TIMEOUT=1")
 
 # Create a standard arrays plugin, set it to get data from ADCSDetector driver.
 NDStdArraysConfigure("Image1", 3, 0, "$(PORT)", 0)
 
 # This creates a waveform large enough for 100000x8 arrays.
-dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image1:,PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT),TYPE=Float64,FTVL=DOUBLE,NELEMENTS=800000")
+dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image1:,PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT),TYPE=Float64,FTVL=DOUBLE,NELEMENTS=17000000")
 
 # make 3 others to get all the real time arrays
-MPA3DetectorConfig("MCP2", $(YSIZE), 7, 0, 0, 0, 0, 2)
-dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det2:,  PORT="MCP2",ADDR=0,TIMEOUT=1")
+##MPA3DetectorConfig("MCP2", $(YSIZE), 7, 0, 0, 0, 0, 2)
+##dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det2:,  PORT="MCP2",ADDR=0,TIMEOUT=1")
 
 # Create a standard arrays plugin, set it to get data from ADCSDetector driver.
 ##NDStdArraysConfigure("Image2", 3, 0, "MCP2", 0)
@@ -75,7 +75,7 @@ dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det2:,  PORT
 
 # these may or may not be required
 # This creates a waveform large enough for 100000x8 arrays.
-dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image2:,PORT=Image2,ADDR=0,TIMEOUT=1,NDARRAY_PORT="MCP2",TYPE=Float64,FTVL=DOUBLE,NELEMENTS=800000")
+#dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image2:,PORT=Image2,ADDR=0,TIMEOUT=1,NDARRAY_PORT="MCP2",TYPE=Float64,FTVL=DOUBLE,NELEMENTS=17000000")
 
 
 ## Load all other plugins using commonPlugins.cmd

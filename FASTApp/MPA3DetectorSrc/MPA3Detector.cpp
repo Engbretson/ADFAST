@@ -623,6 +623,7 @@ void MPA3Detector::mpaTaskBackground()
     //    double timeStep;
 
     int i;
+    int value;
     const char *functionName = "mpaTaskBackground";
 
 //printf("In mpaTaskBackground %d\n",channelNum);
@@ -636,8 +637,16 @@ void MPA3Detector::mpaTaskBackground()
  //       printf("In the mpaTaskBackground loop %d\n",channelNum);	
 	   this->lock();
 	   if (this->channelNum > 0) {
-
+        status = getIntegerParam(P_RunTimeEnable, &value);
+        if (value == 0) {
         computeArrays(0);
+		
+//	status |= setIntegerParam(ADMinX, 0);
+//	status |= setIntegerParam(ADMinY, 0);
+	status |= setIntegerParam(NDArraySizeX, 1024);
+//	status |= setIntegerParam(ADSizeX, 1024);
+	status |= setIntegerParam(NDArraySizeY, 1024);
+//	status |= setIntegerParam(ADSizeY, 1024);
 
         pImage = this->pArrays[0];
 
@@ -662,6 +671,7 @@ void MPA3Detector::mpaTaskBackground()
             callParamCallbacks(i);
         }
     }
+	   }
 	}
 }
 
