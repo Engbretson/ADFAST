@@ -483,6 +483,7 @@ if (data[(jj*1024)+kk] > maxvalue){
 }
 }
 	}
+free(data);	
 	if (verbose != 0) {
 printf("Max Value seen at (%d,%d) %d \n",xx,yy,maxvalue);
 }
