@@ -255,6 +255,7 @@ lpLVGetDat = (IMPALVGetDat)GetProcAddress(hDLL, "LVGetDat");
     createParam(mpaPhaseString,         asynParamFloat64, &P_Phase);
     createParam(mpaNoiseString,         asynParamFloat64, &P_Noise);
     createParam(mpaCommandString,       asynParamOctet,   &P_Command);
+    createParam(mpaTotalRateString,     asynParamFloat64, &P_TotalRate);
 
     status |= setIntegerParam(P_NumTimePoints, numTimePoints);
     status |= setIntegerParam(NDDataType, dataType);
@@ -264,6 +265,7 @@ lpLVGetDat = (IMPALVGetDat)GetProcAddress(hDLL, "LVGetDat");
     status |= setDoubleParam(P_Period,    1.0);
     status |= setDoubleParam(P_Phase,     0.0);
     status |= setDoubleParam(P_Noise,     0.0);
+    status |= setDoubleParam(P_TotalRate, 0.0);
 
     if (status) {
         printf("%s: unable to set parameters\n", functionName);
@@ -432,6 +434,8 @@ void MPA3Detector::computeArrays(int verbose = 0)
 //	double offset[MAX_SIGNALS];
 //    NDArray *pImage;
 
+ACQSTATUS      Status = { 0 }; 
+
 	getIntegerParam(NDDataType, (int *)&dataType);
 	getIntegerParam(P_NumTimePoints, &numTimePoints);
 	getDoubleParam(P_TimeStep, &timeStep);
@@ -461,8 +465,16 @@ void MPA3Detector::computeArrays(int verbose = 0)
 
 	unsigned long *data;
 //	int ii = 2;
+int two = 2;
+double temptotalrate;
       int err;
-
+	  
+	if (lpStat) err = (*lpStat)(&Status, two); 
+//    printf("totalrate= %.2lf\n", Status->cnt[ST_TOTALRATE]);
+    temptotalrate = Status.cnt[ST_TOTALRATE];
+    setDoubleParam(P_TotalRate, temptotalrate);
+    callParamCallbacks();
+   
 	data = (unsigned long *)calloc(1024 * 1024, sizeof(long));
 	if (lpLVGetDat) err = (*lpLVGetDat) (data, abs(this->channelNum));
 

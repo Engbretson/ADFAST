@@ -28,6 +28,7 @@
 #define mpaPhaseString          "MPA_PHASE"
 #define mpaNoiseString          "MPA_NOISE"
 #define mpaCommandString        "MPA_COMMAND"
+#define mpaTotalRateString      "MPA_TOTALRATE"
 
 #define MAX_SIGNALS 8
 
@@ -68,6 +69,7 @@ protected:
     int P_Frequency;
     int P_Phase;
     int P_Noise;
+	int P_TotalRate;
 
     int P_Command;
     #define LAST_MPA_DETECTOR_PARAM P_Command
