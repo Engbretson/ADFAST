@@ -1,3 +1,4 @@
 file "MPA3Detector_settings.req",  P=$(P),  R=det1:
 file "NDStdArrays_settings.req",     P=$(P),  R=image1:
+file "NDStdArrays_settings.req",     P=$(P),  R=image2:
 file "commonPlugin_settings.req",    P=$(P)

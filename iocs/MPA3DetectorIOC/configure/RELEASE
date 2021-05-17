@@ -8,5 +8,5 @@ ADFAST = $(TOP)/../..
 -include $(TOP)/RELEASE.local
 -include $(TOP)/configure/RELEASE.local
 
-MODBUS=$(SUPPORT)/modbus-R3-0
+MODBUS=$(SUPPORT)/modbus-R3-2
 

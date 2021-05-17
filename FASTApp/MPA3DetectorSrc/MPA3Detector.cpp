@@ -205,6 +205,8 @@ lpLVGetDat = (IMPALVGetDat)GetProcAddress(hDLL, "LVGetDat");
         return;
     }
 
+	lastdata = (unsigned long *)calloc(1024 * 1024, sizeof(long));
+	
     // Initialize parameters
     ErrSet = (*lpNewStat)(0);
     ErrSet = (*lpStat)(&Status, 0);
@@ -302,6 +304,7 @@ lpLVGetDat = (IMPALVGetDat)GetProcAddress(hDLL, "LVGetDat");
  */
 MPA3Detector::~MPA3Detector()
 {
+	free(lastdata);
   FreeLibrary(hDLL);
 }
 
@@ -466,6 +469,8 @@ ACQSTATUS      Status = { 0 };
 	unsigned long *data;
 //	int ii = 2;
 int two = 2;
+int zero = 0;
+
 double temptotalrate;
       int err;
 	  
@@ -487,8 +492,15 @@ double temptotalrate;
 		
 //	data[(jj*1024)+kk] = jj;
 	
-	pData[(jj*1024)+kk] = (epicsType) data[(jj*1024)+kk];	
-if (data[(jj*1024)+kk] > maxvalue){	
+// if not dong the subtraction below
+////	pData[(jj*1024)+kk] = (epicsType) data[(jj*1024)+kk];	
+	
+// start of just last image data change	
+	pData[(jj*1024)+kk] = (epicsType) (data[(jj*1024)+kk] - lastdata[(jj*1024)+kk]) ;
+	lastdata[(jj*1024)+kk] =  data[(jj*1024)+kk];
+//end of just last image data change 	
+
+	if (data[(jj*1024)+kk] > maxvalue){	
 	maxvalue = data[(jj*1024)+kk];
 	xx=jj;
 	yy=kk;
@@ -496,6 +508,12 @@ if (data[(jj*1024)+kk] > maxvalue){
 }
 	}
 free(data);	
+
+// attempt to clear all spectra after grabbing it
+////if (maxvalue > 5000) {
+////if (lpErase) (*lpErase)(zero);
+////}
+
 	if (verbose != 0) {
 printf("Max Value seen at (%d,%d) %d \n",xx,yy,maxvalue);
 }

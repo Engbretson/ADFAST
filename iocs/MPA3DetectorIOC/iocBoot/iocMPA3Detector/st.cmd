@@ -64,6 +64,7 @@ NDStdArraysConfigure("Image1", 3, 0, "$(PORT)", 0)
 
 # This creates a waveform large enough for 100000x8 arrays.
 dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image1:,PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT),TYPE=Float64,FTVL=DOUBLE,NELEMENTS=17000000")
+dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image2:,PORT=Image2,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT),TYPE=Float64,FTVL=DOUBLE,NELEMENTS=17000000")
 
 # make 3 others to get all the real time arrays
 ##MPA3DetectorConfig("MCP2", $(YSIZE), 7, 0, 0, 0, 0, 2)
@@ -80,6 +81,10 @@ dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image1:,PORT=Image1,ADDR=0,
 
 ## Load all other plugins using commonPlugins.cmd
 < $(ADCORE)/iocBoot/commonPlugins.cmd
+
+# Create a standard arrays plugin, set it to get data from ADCSDetector driver.
+NDStdArraysConfigure("Image2", 3, 0, $(PORT), 0)
+
 set_requestfile_path("$(ADFAST)/FASTApp/Db")
 
 #asynSetTraceIOMask("$(PORT)",0,2)
@@ -87,6 +92,8 @@ set_requestfile_path("$(ADFAST)/FASTApp/Db")
 
 # The equipment EPS 
 < modbus.cmd
+dbl > pvs_all.txt
+
 
 iocInit()
 

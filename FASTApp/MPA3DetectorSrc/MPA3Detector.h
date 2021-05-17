@@ -89,8 +89,10 @@ private:
     void PrintDatSetting(DATSETTING *Set);
     void PrintMP3Setting(ACQMP3 *Set);
     void PrintSetting(ACQSETTING *Set);
-
-    char command[256];
+	
+	unsigned long *lastdata;
+    
+	char command[256];
     //    char status[100];
 
     /* Our data */

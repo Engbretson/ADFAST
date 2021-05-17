@@ -1,28 +1,28 @@
-"Do Action #2, The PV does not exist. Start the softIOC."
 < envPaths
 epicsEnvSet("IOC","iocMPA3Detector")
-epicsEnvSet("TOP","Z:/epics/synApps_6_0/areaDetector-R3-4/ADFAST/iocs/MPA3DetectorIOC")
-epicsEnvSet("ADFAST","Z:/epics/synApps_6_0/areaDetector-R3-4/ADFAST/iocs/MPA3DetectorIOC/../..")
-epicsEnvSet("SUPPORT","z:/epics/synApps_6_0")
-epicsEnvSet("ASYN","z:/epics/synApps_6_0/asyn-R4-34")
-epicsEnvSet("AREA_DETECTOR","z:/epics/synApps_6_0/areaDetector-R3-4")
-epicsEnvSet("ADSUPPORT","z:/epics/synApps_6_0/areaDetector-R3-4/ADSupport-R1-6")
-epicsEnvSet("ADCORE","z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4")
-epicsEnvSet("AUTOSAVE","z:/epics/synApps_6_0/autosave-5-9-20")
-epicsEnvSet("BUSY","z:/epics/synApps_6_0/busy-1-7-5")
-epicsEnvSet("CALC","z:/epics/synApps_6_0/calc-3-7-1")
-epicsEnvSet("SNCSEQ","z:/epics/synApps_6_0/seq-2-2-6")
-epicsEnvSet("SSCAN","z:/epics/synApps_6_0/sscan-2-11-1")
-epicsEnvSet("DEVIOCSTATS","z:/epics/synApps_6_0/devIocStats-3-1-15")
-epicsEnvSet("ALIVE","z:/epics/synApps_6_0/alive-R1-1-0")
-epicsEnvSet("MODBUS","z:/epics/synApps_6_0/modbus-R2-11")
-epicsEnvSet("EPICS_BASE","z:/epics/base-7.0.2")
+epicsEnvSet("TOP","Z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/ADFAST/iocs/MPA3DetectorIOC")
+epicsEnvSet("ADFAST","Z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/ADFAST/iocs/MPA3DetectorIOC/../..")
+epicsEnvSet("SUPPORT","z:/epics/synApps_6_1/support-v7")
+epicsEnvSet("ASYN","z:/epics/synApps_6_1/support-v7/asyn-R4-39")
+epicsEnvSet("AREA_DETECTOR","z:/epics/synApps_6_1/support-v7/areaDetector-R3-9")
+epicsEnvSet("ADSUPPORT","z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adsupport-R1-9")
+epicsEnvSet("ADCORE","z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9")
+epicsEnvSet("AUTOSAVE","z:/epics/synApps_6_1/support-v7/autosave-R5-10")
+epicsEnvSet("BUSY","z:/epics/synApps_6_1/support-v7/busy-R1-7-2")
+epicsEnvSet("CALC","z:/epics/synApps_6_1/support-v7/calc-R3-7-3")
+epicsEnvSet("SNCSEQ","z:/epics/synApps_6_1/support-v7/seq-2-2-6")
+epicsEnvSet("SSCAN","z:/epics/synApps_6_1/support-v7/sscan-R2-11-3")
+epicsEnvSet("DEVIOCSTATS","z:/epics/synApps_6_1/support-v7/iocStats-3-1-16")
+epicsEnvSet("ALIVE","z:/epics/synApps_6_1/support-v7/alive-R1-1-1")
+epicsEnvSet("LUA","z:/epics/synApps_6_1/support-v7/lua-R2-1")
+epicsEnvSet("MODBUS","z:/epics/synApps_6_1/support-v7/modbus-R3-0")
+epicsEnvSet("EPICS_BASE","z:/epics/base-7.0.3.1")
 errlogInit(20000)
 epicsEnvSet("IOC","ioc29iddMPA")
 epicsEnvSet("engineer","Engbretson")
 epicsEnvSet("location","ID-29-D")
 epicsEnvSet("group","ID-29-D")
-dbLoadDatabase("Z:/epics/synApps_6_0/areaDetector-R3-4/ADFAST/iocs/MPA3DetectorIOC/dbd/MPA3DetectorApp.dbd")
+dbLoadDatabase("Z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/ADFAST/iocs/MPA3DetectorIOC/dbd/MPA3DetectorApp.dbd")
 MPA3DetectorApp_registerRecordDeviceDriver(pdbbase) 
 # Prefix for all records
 epicsEnvSet("PREFIX", "29iddMPA:")
@@ -31,9 +31,9 @@ epicsEnvSet("PORT",   "MCP1")
 # The queue size for all plugins
 epicsEnvSet("QSIZE",  "20")
 # The maximim image width; used for row profiles in the NDPluginStats plugin
-epicsEnvSet("XSIZE",  "8")
+epicsEnvSet("XSIZE",  "1024")
 # The maximim image height; used for column profiles in the NDPluginStats plugin
-epicsEnvSet("YSIZE",  "2000")
+epicsEnvSet("YSIZE",  "1024")
 # The maximum number of time series points in the NDPluginStats plugin
 epicsEnvSet("NCHANS", "2048")
 # The maximum number of time series points in the NDPluginTimeSeries plugin
@@ -41,15 +41,15 @@ epicsEnvSet("TSPOINTS", "2048")
 # The maximum number of frames buffered in the NDPluginCircularBuff plugin
 epicsEnvSet("CBUFFS", "500")
 # The search path for database files
-epicsEnvSet("EPICS_DB_INCLUDE_PATH", "z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/db")
-epicsEnvSet("T1", "Sin(x)")
-epicsEnvSet("T2", "Cos(x)")
-epicsEnvSet("T3", "SquareWave(x)")
-epicsEnvSet("T4", "Sawtooth(x)")
-epicsEnvSet("T5", "Noise")
-epicsEnvSet("T6", "Sin(x)+Cos(x)")
-epicsEnvSet("T7", "Sin(x)*Cos(x)")
-epicsEnvSet("T8", "SinSums")
+epicsEnvSet("EPICS_DB_INCLUDE_PATH", "z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/db")
+#epicsEnvSet("T1", "Sin(x)")
+#epicsEnvSet("T2", "Cos(x)")
+#epicsEnvSet("T3", "SquareWave(x)")
+#epicsEnvSet("T4", "Sawtooth(x)")
+#epicsEnvSet("T5", "Noise")
+#epicsEnvSet("T6", "Sin(x)+Cos(x)")
+#epicsEnvSet("T7", "Sin(x)*Cos(x)")
+#epicsEnvSet("T8", "SinSums")
 asynSetMinTimerPeriod(0.001)
 # The EPICS environment variable EPICS_CA_MAX_ARRAY_BYTES needs to be set to a value at least as large
 # as the largest image that the standard arrays plugin will send.
@@ -64,15 +64,15 @@ asynSetMinTimerPeriod(0.001)
 #epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES", "10000000")
 # Create an ADCimDetector driver
 # MPA3DetectorConfig(const char *portName, int numTimePoints, int dataType,
-#                      int maxBuffers, int maxMemory, int priority, int stackSize)
-MPA3DetectorConfig("MCP1", 2000, 7, 0, 0)
-OFF
-realtime= 1.00
-runtime= 8.07
+#                      int maxBuffers, int maxMemory, int priority, int stackSize, int channelNum)
+MPA3DetectorConfig("MCP1", 1024, 7, 0, 0, 0, 0, 2)
+ON
+realtime= 543.22
+runtime= 543.26
 single_ev= 0.000000
-coinc_ev= 667.000000
+coinc_ev= 140517.000000
 sglrate= 0.00
-coirate= 0.00
+coirate= 389.55
 range= 1024
 prena= 0
 roimin= 1
@@ -93,21 +93,30 @@ rtcuse= 0
 dac= 0
 diguse= 0
 digval= 0
-rtprena= 1
-rtpreset= 1
-savedata= 0
-autoinc= 0
-fmt= 1
+rtprena= 0
+rtpreset= 0.5
+savedata= 1
+autoinc= 1
+fmt= 4
 sepfmt= 4
 sephead= 0
-filename= Z:/2019_2/Fanny/mpa/mpa_006.mpa
-dbLoadRecords("Z:/epics/synApps_6_0/areaDetector-R3-4/ADFAST/iocs/MPA3DetectorIOC/../../db/MPA3Detector.template",  "P=29iddMPA:,R=det1:,  PORT=MCP1,ADDR=0,TIMEOUT=1")
+filename= TEST016.mpa
+dbLoadRecords("Z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/ADFAST/iocs/MPA3DetectorIOC/../../db/MPA3Detector.template",  "P=29iddMPA:,R=det1:,  PORT=MCP1,ADDR=0,TIMEOUT=1")
 # Create a standard arrays plugin, set it to get data from ADCSDetector driver.
 NDStdArraysConfigure("Image1", 3, 0, "MCP1", 0)
 # This creates a waveform large enough for 100000x8 arrays.
-dbLoadRecords("NDStdArrays.template", "P=29iddMPA:,R=image1:,PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=MCP1,TYPE=Float64,FTVL=DOUBLE,NELEMENTS=800000")
+dbLoadRecords("NDStdArrays.template", "P=29iddMPA:,R=image1:,PORT=Image1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=MCP1,TYPE=Float64,FTVL=DOUBLE,NELEMENTS=17000000")
+# make 3 others to get all the real time arrays
+##MPA3DetectorConfig("MCP2", $(YSIZE), 7, 0, 0, 0, 0, 2)
+##dbLoadRecords("$(ADFAST)/db/MPA3Detector.template",  "P=$(PREFIX),R=det2:,  PORT="MCP2",ADDR=0,TIMEOUT=1")
+# Create a standard arrays plugin, set it to get data from ADCSDetector driver.
+##NDStdArraysConfigure("Image2", 3, 0, "MCP2", 0)
+# Create a standard arrays plugin, set it to get data from ADCSDetector driver.
+# these may or may not be required
+# This creates a waveform large enough for 100000x8 arrays.
+#dbLoadRecords("NDStdArrays.template", "P=$(PREFIX),R=image2:,PORT=Image2,ADDR=0,TIMEOUT=1,NDARRAY_PORT="MCP2",TYPE=Float64,FTVL=DOUBLE,NELEMENTS=17000000")
 ## Load all other plugins using commonPlugins.cmd
-< z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/iocBoot/commonPlugins.cmd
+< z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/iocBoot/commonPlugins.cmd
 # This is an example file for creating plugins
 # It uses the following environment variable macros
 # Many of the parameters defined in this file are also in commonPlugins_settings.req so if autosave is being
@@ -135,7 +144,7 @@ NDFileNexusConfigure("FileNexus1", 20, 0, "MCP1", 0)
 dbLoadRecords("NDFileNexus.template", "P=29iddMPA:,R=Nexus1:,PORT=FileNexus1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=MCP1")
 # Create an HDF5 file saving plugin
 NDFileHDF5Configure("FileHDF1", 20, 0, "MCP1", 0)
-dbLoadRecords("NDFileHDF5.template",  "P=29iddMPA:,R=HDF1:,PORT=FileHDF1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=MCP1")
+dbLoadRecords("NDFileHDF5.template",  "P=29iddMPA:,R=HDF1:,PORT=FileHDF1,ADDR=0,TIMEOUT=1,XMLSIZE=2048,NDARRAY_PORT=MCP1")
 # Create a Magick file saving plugin
 NDFileMagickConfigure("FileMagick1", 20, 0, "MCP1", 0)
 dbLoadRecords("NDFileMagick.template","P=29iddMPA:,R=Magick1:,PORT=FileMagick1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=MCP1")
@@ -181,25 +190,25 @@ dbLoadRecords("NDGatherN.template",   "P=29iddMPA:,R=Gather1:, N=7, PORT=GATHER1
 dbLoadRecords("NDGatherN.template",   "P=29iddMPA:,R=Gather1:, N=8, PORT=GATHER1,ADDR=7,TIMEOUT=1,NDARRAY_PORT=MCP1")
 # Create 5 statistics plugins
 NDStatsConfigure("STATS1", 20, 0, "MCP1", 0, 0, 0, 0, 0, 5)
-dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats1:,  PORT=STATS1,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=8,YSIZE=2000,NCHANS=2048,NDARRAY_PORT=MCP1")
+dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats1:,  PORT=STATS1,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=1024,YSIZE=1024,NCHANS=2048,NDARRAY_PORT=MCP1")
 NDTimeSeriesConfigure("STATS1_TS", 20, 0, "STATS1", 1, 23)
-dbLoadRecords("z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats1:TS:, PORT=STATS1_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS1,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats1:TS:, PORT=STATS1_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS1,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
 NDStatsConfigure("STATS2", 20, 0, "ROI1",    0, 0, 0, 0, 0, 5)
-dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats2:,  PORT=STATS2,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=8,YSIZE=2000,NCHANS=2048,NDARRAY_PORT=MCP1")
+dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats2:,  PORT=STATS2,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=1024,YSIZE=1024,NCHANS=2048,NDARRAY_PORT=MCP1")
 NDTimeSeriesConfigure("STATS2_TS", 20, 0, "STATS2", 1, 23)
-dbLoadRecords("z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats2:TS:, PORT=STATS2_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS2,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats2:TS:, PORT=STATS2_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS2,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
 NDStatsConfigure("STATS3", 20, 0, "ROI2",    0, 0, 0, 0, 0, 5)
-dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats3:,  PORT=STATS3,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=8,YSIZE=2000,NCHANS=2048,NDARRAY_PORT=MCP1")
+dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats3:,  PORT=STATS3,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=1024,YSIZE=1024,NCHANS=2048,NDARRAY_PORT=MCP1")
 NDTimeSeriesConfigure("STATS3_TS", 20, 0, "STATS3", 1, 23)
-dbLoadRecords("z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats3:TS:, PORT=STATS3_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS3,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats3:TS:, PORT=STATS3_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS3,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
 NDStatsConfigure("STATS4", 20, 0, "ROI3",    0, 0, 0, 0, 0, 5)
-dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats4:,  PORT=STATS4,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=8,YSIZE=2000,NCHANS=2048,NDARRAY_PORT=MCP1")
+dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats4:,  PORT=STATS4,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=1024,YSIZE=1024,NCHANS=2048,NDARRAY_PORT=MCP1")
 NDTimeSeriesConfigure("STATS4_TS", 20, 0, "STATS4", 1, 23)
-dbLoadRecords("z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats4:TS:, PORT=STATS4_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS4,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats4:TS:, PORT=STATS4_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS4,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
 NDStatsConfigure("STATS5", 20, 0, "ROI4",    0, 0, 0, 0, 0, 5)
-dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats5:,  PORT=STATS5,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=8,YSIZE=2000,NCHANS=2048,NDARRAY_PORT=MCP1")
+dbLoadRecords("NDStats.template",     "P=29iddMPA:,R=Stats5:,  PORT=STATS5,ADDR=0,TIMEOUT=1,HIST_SIZE=256,XSIZE=1024,YSIZE=1024,NCHANS=2048,NDARRAY_PORT=MCP1")
 NDTimeSeriesConfigure("STATS5_TS", 20, 0, "STATS5", 1, 23)
-dbLoadRecords("z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats5:TS:, PORT=STATS5_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS5,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/db/NDTimeSeries.template",  "P=29iddMPA:,R=Stats5:TS:, PORT=STATS5_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=STATS5,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
 # Create a transform plugin
 NDTransformConfigure("TRANS1", 20, 0, "MCP1", 0, 0, 0, 0, 0, 5)
 dbLoadRecords("NDTransform.template", "P=29iddMPA:,R=Trans1:,  PORT=TRANS1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=MCP1")
@@ -233,40 +242,64 @@ dbLoadRecords("NDAttributeN.template", "P=29iddMPA:,R=Attr1:5:,  PORT=ATTR1,ADDR
 dbLoadRecords("NDAttributeN.template", "P=29iddMPA:,R=Attr1:6:,  PORT=ATTR1,ADDR=5,TIMEOUT=1,NCHANS=2048")
 dbLoadRecords("NDAttributeN.template", "P=29iddMPA:,R=Attr1:7:,  PORT=ATTR1,ADDR=6,TIMEOUT=1,NCHANS=2048")
 dbLoadRecords("NDAttributeN.template", "P=29iddMPA:,R=Attr1:8:,  PORT=ATTR1,ADDR=7,TIMEOUT=1,NCHANS=2048")
+NDTimeSeriesConfigure("ATTR1_TS", 20, 0, "ATTR1", 1, 8)
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/db/NDTimeSeries.template",  "P=29iddMPA:,R=Attr1:TS:, PORT=ATTR1_TS,ADDR=0,TIMEOUT=1,NDARRAY_PORT=ATTR1,NDARRAY_ADDR=1,NCHANS=2048,ENABLED=1")
 # Create an FFT plugin
-NDFFTConfigure("FFT1", 3, 0, "MCP1", 0, 0, 0, 0, 0, 5)
-dbLoadRecords("NDFFT.template", "P=29iddMPA:, R=FFT1:, PORT=FFT1, ADDR=0, TIMEOUT=1, NDARRAY_PORT=MCP1, NAME=FFT1, NCHANS=8")
+NDFFTConfigure("FFT1", 20, 0, "MCP1", 0, 0, 0, 0, 0, 5)
+dbLoadRecords("NDFFT.template", "P=29iddMPA:, R=FFT1:, PORT=FFT1, ADDR=0, TIMEOUT=1, NDARRAY_PORT=MCP1, NAME=FFT1, NCHANS=1024")
+# Create 2 Codec plugins
+NDCodecConfigure("CODEC1", 20, 0, "MCP1", 0, 0, 0, 0, 0, 5)
+dbLoadRecords("NDCodec.template", "P=29iddMPA:, R=Codec1:, PORT=CODEC1, ADDR=0, TIMEOUT=1, NDARRAY_PORT=MCP1")
+NDCodecConfigure("CODEC2", 20, 0, "MCP1", 0, 0, 0, 0, 0, 5)
+dbLoadRecords("NDCodec.template", "P=29iddMPA:, R=Codec2:, PORT=CODEC2, ADDR=0, TIMEOUT=1, NDARRAY_PORT=MCP1")
 set_requestfile_path("./")
-set_requestfile_path("z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/ADApp/Db")
-set_requestfile_path("z:/epics/synApps_6_0/areaDetector-R3-4/ADCore-R3-4/iocBoot")
+set_requestfile_path("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/ADApp/Db")
+set_requestfile_path("z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/adcore-R3-9/iocBoot")
 set_savefile_path("./autosave")
 set_pass0_restoreFile("auto_settings.sav")
 set_pass1_restoreFile("auto_settings.sav")
 save_restoreSet_status_prefix("29iddMPA:")
-dbLoadRecords("z:/epics/synApps_6_0/autosave-5-9-20/asApp/Db/save_restoreStatus.db", "P=29iddMPA:")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/autosave-R5-10/asApp/Db/save_restoreStatus.db", "P=29iddMPA:")
 # Optional: load NDPluginPva plugin
 NDPvaConfigure("PVA1", 20, 0, "MCP1", 0, 29iddMPA:Pva1:Image, 0, 0, 0)
 dbLoadRecords("NDPva.template",  "P=29iddMPA:,R=Pva1:, PORT=PVA1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=MCP1")
 # Must start PVA server if this is enabled
 startPVAServer
+# Optional: load ffmpegServer plugin
+#ffmpegServerConfigure(8081)
+#ffmpegStreamConfigure("FfmStream1", 2, 0, "$(PORT)", 0, -1, 0)
+#dbLoadRecords("$(FFMPEGSERVER)/db/ffmpegStream.template", "P=$(PREFIX),R=ffmstream1:,PORT=FfmStream1,NDARRAY_PORT=$(PORT)")
+#ffmpegFileConfigure("FfmFile1", 16, 0, "$(PORT)", 0, -1, 0)
+#dbLoadRecords("$(FFMPEGSERVER)/db/ffmpegFile.template", "P=$(PREFIX),R=ffmfile1:,PORT=FfmFile1,NDARRAY_PORT=$(PORT)")
 # Optional: load NDPluginEdge plugin
 #NDEdgeConfigure("EDGE1", $(QSIZE), 0, "$(PORT)", 0, 0, 0, 0)
 #dbLoadRecords("$(ADPLUGINEDGE)/db/NDEdge.template",  "P=$(PREFIX),R=Edge1:, PORT=EDGE1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT)")
 #set_requestfile_path("$(ADPLUGINEDGE)/edgeApp/Db")
+# Optional: load NDPluginCV plugin
+#NDCVConfigure("CV1", $(QSIZE), 0, "$(PORT)", 0, 0, 0, 0, 0, $(MAX_THREADS=5))
+#dbLoadRecords("$(ADCOMPVISION)/db/NDCV.template",  "P=$(PREFIX),R=CV1:, PORT=CV1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT)")
+#set_requestfile_path("$(ADCOMPVISION)/adcvApp/Db")
+# Optional: load NDPluginBar plugin
+#NDBarConfigure("BAR1", $(QSIZE), 0, "$(PORT)", 0, 0, 0, 0, 0, $(MAX_THREADS=5))
+#dbLoadRecords("$(ADPLUGINBAR)/db/NDBar.template",  "P=$(PREFIX),R=Bar1:, PORT=BAR1,ADDR=0,TIMEOUT=1,NDARRAY_PORT=$(PORT)")
+#set_requestfile_path("$(ADPLUGINBAR)/barApp/Db")
 # Optional: load scan records
-dbLoadRecords("z:/epics/synApps_6_0/sscan-2-11-1/sscanApp/Db/scan.db", "P=29iddMPA:,MAXPTS1=2000,MAXPTS2=200,MAXPTS3=20,MAXPTS4=10,MAXPTSH=10")
-set_requestfile_path("z:/epics/synApps_6_0/sscan-2-11-1/sscanApp/Db")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/sscan-R2-11-3/sscanApp/Db/scan.db", "P=29iddMPA:,MAXPTS1=2000,MAXPTS2=200,MAXPTS3=20,MAXPTS4=10,MAXPTSH=10")
+set_requestfile_path("z:/epics/synApps_6_1/support-v7/sscan-R2-11-3/sscanApp/Db")
 # Optional: load sseq record for acquisition sequence
-dbLoadRecords("z:/epics/synApps_6_0/calc-3-7-1/calcApp/Db/sseqRecord.db", "P=29iddMPA:, S=AcquireSequence")
-set_requestfile_path("z:/epics/synApps_6_0/calc-3-7-1/calcApp/Db")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/calc-R3-7-3/calcApp/Db/sseqRecord.db", "P=29iddMPA:, S=AcquireSequence")
+set_requestfile_path("z:/epics/synApps_6_1/support-v7/calc-R3-7-3/calcApp/Db")
 # Optional: load devIocStats records (requires DEVIOCSTATS module)
-dbLoadRecords("z:/epics/synApps_6_0/devIocStats-3-1-15/db/iocAdminSoft.db", "IOC=29iddMPA:")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/iocStats-3-1-16/db/iocAdminSoft.db", "IOC=29iddMPA:")
 # Optional: load alive record (requires ALIVE module)
-#dbLoadRecords("$(ALIVE)/aliveApp/Db/alive.db", "P=$(PREFIX),RHOST=192.168.1.254")
-dbLoadRecords("z:/epics/synApps_6_0/alive-R1-1-0/aliveApp/Db/alive.db", "P=29iddMPA:,RHOST=164.54.100.11")
-set_requestfile_path("Z:/epics/synApps_6_0/areaDetector-R3-4/ADFAST/iocs/MPA3DetectorIOC/../../FASTApp/Db")
+dbLoadRecords("z:/epics/synApps_6_1/support-v7/alive-R1-1-1/aliveApp/Db/alive.db", "P=29iddMPA:,RHOST=164.54.100.11")
+# Set the callback queue size to 5000, up from default of 2000 in base.
+# This can be needed to avoid errors "callbackRequest: cbLow ring buffer full".
+callbackSetQueueSize(5000)
+set_requestfile_path("Z:/epics/synApps_6_1/support-v7/areaDetector-R3-9/ADFAST/iocs/MPA3DetectorIOC/../../FASTApp/Db")
 #asynSetTraceIOMask("$(PORT)",0,2)
 #asynSetTraceMask("$(PORT)",0,255)
+# The equipment EPS 
 < modbus.cmd
 #modbus.cmd
 # Use the following commands for TCP/IP
@@ -307,16 +340,18 @@ drvModbusAsynConfigure("SP_Bits",   "DL06", 0, 2,  06000, 01000,   0,  100, "Koy
 dbLoadTemplate("modbus.substitutions")
 iocInit()
 ############################################################################
-## EPICS R7.0.2
-## EPICS Base built Jan  8 2019
+## EPICS R7.0.3.2-DEV
+## EPICS Base built Mar 30 2020
 ############################################################################
 recDynLinkOut: waiting for CA context
 recDynLinkOut: got CA context
-autoinc=0
-savedata=0
-rtprena=1
-rtpreset=1.000
 # save things every thirty seconds
 create_monitor_set("auto_settings.req", 30, "P=29iddMPA:")
-epics> auto_settings.sav: 2743 of 2743 PV's connected
-epics> Press any key to continue . . . 
+epics> save_restore: connect failed for channel '29iddMPA:det1:TimeStep'
+save_restore: connect failed for channel '29iddMPA:det1:NumTimePoints'
+save_restore: connect failed for channel '29iddMPA:det1:AcquireTime'
+save_restore: connect failed for channel '29iddMPA:det1:MPAFilename'
+save_restore: connect failed for channel '29iddMPA:det1:FileAutoIncr'
+save_restore: connect failed for channel '29iddMPA:det1:FileAutoSave'
+save_restore: connect failed for channel '29iddMPA:det1:RunTimeEnable'
+auto_settings.sav: 2834 of 2841 PV's connected
